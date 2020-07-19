@@ -23,12 +23,13 @@ public class OrderManager extends JFrame {
 
     public static final String GET_TOTAL = "Get Total";
     public static final String CREATE_ORDER = "Create Order";
+    public static final String MODIFY_ORDER = "Modify Order";
     public static final String EXIT = "Exit";
 
     private JComboBox cmbOrderType;
     private JPanel pSearchCriteria;
 
-    private JButton getTotalButton, createOrderButton, exitButton;
+    private JButton getTotalButton, createOrderButton, modOrderButton, exitButton;
 
     private JLabel lblOrderType;
     private JLabel lblParcial, lblParcialValue;
@@ -66,6 +67,9 @@ public class OrderManager extends JFrame {
         createOrderButton = new JButton(OrderManager.CREATE_ORDER);
         createOrderButton.setMnemonic(KeyEvent.VK_C);//getTotal?
         createOrderButton.setEnabled(false);
+        
+        modOrderButton = new JButton(OrderManager.MODIFY_ORDER);
+        modOrderButton.setEnabled(false);
 
         exitButton = new JButton(OrderManager.EXIT);
         exitButton.setMnemonic(KeyEvent.VK_X);
@@ -87,16 +91,20 @@ public class OrderManager extends JFrame {
 
         panel.add(getTotalButton);
         panel.add(createOrderButton);
+        panel.add(modOrderButton);
         panel.add(exitButton);
-        gbc2.anchor = GridBagConstraints.EAST;
+        gbc2.anchor = GridBagConstraints.CENTER;
         gbc2.gridx = 0;
         gbc2.gridy = 0;
         gridbag2.setConstraints(createOrderButton, gbc2);
         gbc2.gridx = 1;
         gbc2.gridy = 0;
+        gridbag2.setConstraints(modOrderButton, gbc2);
+        gbc2.gridx = 0;
+        gbc2.gridy = 1;
         gridbag2.setConstraints(getTotalButton, gbc2);
-        gbc2.gridx = 2;
-        gbc2.gridy = 0;
+        gbc2.gridx = 1;
+        gbc2.gridy = 1;
         gridbag2.setConstraints(exitButton, gbc2);
 
         //****************************************************
@@ -221,6 +229,10 @@ public class OrderManager extends JFrame {
         return createOrderButton;
     }
 
+    public JButton getModOrderButton() {
+        return modOrderButton;
+    }
+
 }// End of class OrderManager
 
 class ButtonHandler implements ActionListener {
@@ -257,6 +269,7 @@ class ButtonHandler implements ActionListener {
             }
             objOrderManager.getGetTotalButton().setEnabled(true);
             objOrderManager.getCreateOrderButton().setEnabled(true);
+            objOrderManager.getModOrderButton().setEnabled(true);
         }
 
         if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)) {
@@ -271,7 +284,7 @@ class ButtonHandler implements ActionListener {
             try {
                 objOrderComp.addComponent((OrderComponent) order);
             } catch (CompositeException ex) {
-                System.out.println("Error" + ex);
+                System.out.println("Error AddComponent" + ex);
             }
 
             totalResult = new Double(visitor.getOrderTotal()).toString();

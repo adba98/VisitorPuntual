@@ -1,7 +1,9 @@
 package Visitor;
 
+import Composite.OrderComponent;
 
-public class OverseasOrder implements Order {
+
+public class OverseasOrder extends OrderComponent implements Order {
 
     private double orderAmount;
     private double additionalSH;
@@ -24,5 +26,10 @@ public class OverseasOrder implements Order {
 
     public void accept(OrderVisitor v) {
         v.visit(this);
+    }
+
+    @Override
+    public String toString() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
