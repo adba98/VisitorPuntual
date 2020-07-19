@@ -280,9 +280,9 @@ class ButtonHandler implements ActionListener {
         }
 
         if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
-            //Get the Visitor
-            
-            // suoi del opatron composite para callcular el total de totales 
+            String total = new Double(objOrderComp.getTotal()).toString();
+            objOrderManager.setTotalValue(total);
+
         }
     }
 

@@ -28,8 +28,16 @@ public class CaliforniaOrder extends OrderComponent implements Order {
         v.visit(this);
     }
 
+   
+    /*@Override
+    public double getTotal() {  
+        
+        // este valor es generado por el vistador y almacendo por el mismo 
+      return total  ; 
+    }*/
+
     @Override
-    public double getTotal() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String toString() {
+       return "Claifornia oreder " + "\n amount " + orderAmount + "\n amount " +  additionalTax + "\n total  "  +  getTotal() ; 
     }
 }

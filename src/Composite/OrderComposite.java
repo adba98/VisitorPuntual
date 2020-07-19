@@ -15,18 +15,6 @@ public class OrderComposite extends OrderComponent {
 
     }
 
-    @Override
-    public double getTotal() {
-        double sizeOfAllFiles = 0;
-        Enumeration e = orderCol.elements();
-        while (e.hasMoreElements()) {
-            OrderComponent component = (OrderComponent) e.nextElement();
-            sizeOfAllFiles = sizeOfAllFiles + (component.getTotal());
-
-        }
-        return sizeOfAllFiles;
-    }
-
     public void addComponent(OrderComponent component) throws CompositeException {
 
         orderCol.add(component);
@@ -37,6 +25,22 @@ public class OrderComposite extends OrderComponent {
     public OrderComponent getComponent(int componentNum) throws CompositeException {
         System.out.println(orderCol);
         return (OrderComponent) orderCol.elementAt(componentNum);
+    }
+
+    @Override
+    public double getTotal() {
+        double totalOrders = 0;
+        Enumeration e = orderCol.elements();
+        while (e.hasMoreElements()) {
+            OrderComponent component = (OrderComponent) e.nextElement();
+            totalOrders = totalOrders + (component.getTotal());
+        }
+        return totalOrders;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido " + getTotal() ; 
     }
 
 }
