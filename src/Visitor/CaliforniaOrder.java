@@ -1,7 +1,9 @@
 package Visitor;
 
+import Composite.OrderComponent;
 
-public class CaliforniaOrder implements Order {
+
+public class CaliforniaOrder extends OrderComponent implements Order {
 
     private double orderAmount;
     private double additionalTax;
@@ -24,5 +26,10 @@ public class CaliforniaOrder implements Order {
 
     public void accept(OrderVisitor v) {
         v.visit(this);
+    }
+
+    @Override
+    public double getTotal() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

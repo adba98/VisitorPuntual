@@ -1,6 +1,9 @@
 package Visitor;
 
 import Builder.*;
+import Composite.CompositeException;
+import Composite.OrderComponent;
+import Composite.OrderComposite;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -25,7 +28,10 @@ public class OrderManager extends JFrame {
     private JComboBox cmbOrderType;
     private JPanel pSearchCriteria;
 
+    private JButton getTotalButton, createOrderButton, exitButton;
+
     private JLabel lblOrderType;
+    private JLabel lblParcial, lblParcialValue;
     private JLabel lblTotal, lblTotalValue;
 
     private OrderVisitor objVisitor;
@@ -46,17 +52,22 @@ public class OrderManager extends JFrame {
 
         lblOrderType = new JLabel("Order Type:");
 
-        lblTotal = new JLabel("Result:");
+        lblParcial = new JLabel("Result Parcial:");
+        lblParcialValue = new JLabel("-----");
+
+        lblTotal = new JLabel("Result Total:");
         lblTotalValue = new JLabel("Click Create or GetTotal Button");
 
         //Create the open button
-        JButton getTotalButton = new JButton(OrderManager.GET_TOTAL);
+        getTotalButton = new JButton(OrderManager.GET_TOTAL);
         getTotalButton.setMnemonic(KeyEvent.VK_G);
+        getTotalButton.setEnabled(false);
 
-        JButton createOrderButton = new JButton(OrderManager.CREATE_ORDER);
-        getTotalButton.setMnemonic(KeyEvent.VK_C);//getTotal?
+        createOrderButton = new JButton(OrderManager.CREATE_ORDER);
+        createOrderButton.setMnemonic(KeyEvent.VK_C);//getTotal?
+        createOrderButton.setEnabled(false);
 
-        JButton exitButton = new JButton(OrderManager.EXIT);
+        exitButton = new JButton(OrderManager.EXIT);
         exitButton.setMnemonic(KeyEvent.VK_X);
 
         ButtonHandler objButtonHandler = new ButtonHandler(this);
@@ -96,6 +107,9 @@ public class OrderManager extends JFrame {
         buttonPanel.add(lblOrderType);
         buttonPanel.add(cmbOrderType);
         buttonPanel.add(pSearchCriteria);
+
+        buttonPanel.add(lblParcial);
+        buttonPanel.add(lblParcialValue);
         buttonPanel.add(lblTotal);
         buttonPanel.add(lblTotalValue);
 
@@ -122,11 +136,21 @@ public class OrderManager extends JFrame {
         gbc.anchor = GridBagConstraints.EAST;
         gbc.gridx = 0;
         gbc.gridy = 2;
-        gridbag.setConstraints(lblTotal, gbc);
+        gridbag.setConstraints(lblParcial, gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
         gbc.gridy = 2;
+        gridbag.setConstraints(lblParcialValue, gbc);
+
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gridbag.setConstraints(lblTotal, gbc);
+
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.gridx = 1;
+        gbc.gridy = 3;
         gridbag.setConstraints(lblTotalValue, gbc);
 
         gbc.insets.left = 2;
@@ -166,6 +190,10 @@ public class OrderManager extends JFrame {
         lblTotalValue.setText(msg);
     }
 
+    public void setParcialValue(String msg) {
+        lblParcialValue.setText(msg);
+    }
+
     public OrderVisitor getOrderVisitor() {
         return objVisitor;
     }
@@ -185,6 +213,14 @@ public class OrderManager extends JFrame {
         validate();
     }
 
+    public JButton getGetTotalButton() {
+        return getTotalButton;
+    }
+
+    public JButton getCreateOrderButton() {
+        return createOrderButton;
+    }
+
 }// End of class OrderManager
 
 class ButtonHandler implements ActionListener {
@@ -192,6 +228,9 @@ class ButtonHandler implements ActionListener {
     OrderManager objOrderManager;
     UIBuilder builder;
     JPanel UIObj;
+    OrderComposite objOrderComp = new OrderComposite();
+
+    ;
 
     public void actionPerformed(ActionEvent e) {
         String totalResult = null;
@@ -216,11 +255,12 @@ class ButtonHandler implements ActionListener {
                 UIObj = builder.getSearchUI();
                 objOrderManager.displayNewUI(UIObj);
             }
+            objOrderManager.getGetTotalButton().setEnabled(true);
+            objOrderManager.getCreateOrderButton().setEnabled(true);
         }
 
         if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)) {
             //get input values
-
             Order order = builder.createOrder();
 
             //Get the Visitor (instantiate)
@@ -228,17 +268,21 @@ class ButtonHandler implements ActionListener {
 
             // accept the visitor instance
             order.accept(visitor);
+            try {
+                objOrderComp.addComponent((OrderComponent) order);
+            } catch (CompositeException ex) {
+                System.out.println("Error" + ex);
+            }
 
-            objOrderManager.setTotalValue(
-                    " Order Created Successfully");
+            totalResult = new Double(visitor.getOrderTotal()).toString();
+            objOrderManager.setParcialValue(totalResult);
+
         }
 
         if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
             //Get the Visitor
-            OrderVisitor visitor = objOrderManager.getOrderVisitor();
-            totalResult = new Double(visitor.getOrderTotal()).toString();
-            totalResult = " Orders Total = " + totalResult;
-            objOrderManager.setTotalValue(totalResult);
+            
+            // suoi del opatron composite para callcular el total de totales 
         }
     }
 

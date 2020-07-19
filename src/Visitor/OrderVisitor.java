@@ -12,25 +12,23 @@ class OrderVisitor implements VisitorInterface {
     }
 
     public void visit(NonCaliforniaOrder inp_order) {
-        orderTotal = orderTotal + inp_order.getOrderAmount();
+        orderTotal = inp_order.getOrderAmount();
     }
 
     public void visit(CaliforniaOrder inp_order) {
-        orderTotal = orderTotal + inp_order.getOrderAmount()
-                + inp_order.getAdditionalTax();
+        orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalTax();
     }
 
     public void visit(OverseasOrder inp_order) {
-        orderTotal = orderTotal + inp_order.getOrderAmount()
-                + inp_order.getAdditionalSH();
+        orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalSH();
+    }
+
+    public void visit(ColombianOrder inp_order) {
+        orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalSH();
     }
 
     public double getOrderTotal() {
         return orderTotal;
     }
 
-    public void visit(ColombianOrder inp_order) {
-        orderTotal = orderTotal + inp_order.getOrderAmount()
-                + inp_order.getAdditionalSH();
-    }
 }
