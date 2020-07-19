@@ -1,11 +1,12 @@
 package Visitor;
 
+import Composite.OrderComponent;
 
 /**
  *
  * @author OSCAR
  */
-public class ColombianOrder implements Order {
+public class ColombianOrder extends OrderComponent implements Order {
 
     private double orderAmount;
     private double additionalSH;
@@ -27,5 +28,10 @@ public class ColombianOrder implements Order {
     public double getAdditionalSH() {
         return additionalSH;
 
+    }
+
+    @Override
+    public String toString() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

@@ -271,7 +271,7 @@ class ButtonHandler implements ActionListener {
             try {
                 objOrderComp.addComponent((OrderComponent) order);
             } catch (CompositeException ex) {
-                System.out.println("Error" + ex);
+                System.out.println("Error AddComponent" + ex);
             }
 
             totalResult = new Double(visitor.getOrderTotal()).toString();
