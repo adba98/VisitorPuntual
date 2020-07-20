@@ -1,7 +1,10 @@
 package Composite;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Vector;
+
+import iterador.FilterOrders;
 
 /**
  *
@@ -16,10 +19,7 @@ public class OrderComposite extends OrderComponent {
     }
 
     public void addComponent(OrderComponent component) throws CompositeException {
-
         orderCol.add(component);
-        System.out.println(orderCol);
-
     }
 
     public OrderComponent getComponent(int componentNum) throws CompositeException {
@@ -42,5 +42,17 @@ public class OrderComposite extends OrderComponent {
     public String toString() {
         return "Pedido " + getTotal() ; 
     }
+    
+    
+    
+    // uso para el patron iterador externo 
+    public Iterator getFilteredOrders(String typeOrder) {
+    	return new FilterOrders(this, typeOrder);
+    
+    }
+
+	public Enumeration getAllOrders() {
+		return orderCol.elements(); 
+	}
 
 }
