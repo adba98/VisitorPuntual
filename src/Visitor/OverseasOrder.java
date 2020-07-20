@@ -7,6 +7,7 @@ public class OverseasOrder extends OrderComponent implements Order {
 
     private double orderAmount;
     private double additionalSH;
+    private String name = "Overseas"; 
 
     public OverseasOrder() {
     }
@@ -30,6 +31,6 @@ public class OverseasOrder extends OrderComponent implements Order {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	 return "\n "+ name + " Order \n Amount: " + orderAmount + "\n SH: " +  additionalSH + "\n Total:"  +  getTotal() ; 
     }
 }

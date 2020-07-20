@@ -10,8 +10,8 @@ import java.util.*;
  *
  * @author OSCAR
  */
-public class NONCABuilder extends UIBuilder {
 
+public class NONCABuilder extends UIBuilder {
     private JTextField txtOrderAmount = new JTextField(10);
 
     @Override

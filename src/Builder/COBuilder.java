@@ -12,13 +12,13 @@ import javax.swing.*;
 public class COBuilder extends UIBuilder {
 
     private JTextField txtOrderAmount = new JTextField(10);
-    private JTextField txtAdditionalSH = new JTextField(10);
+    private JTextField txtAdditionalIVA = new JTextField(10);
 
     @Override
     public void addUIControls() {
         searchUI = new JPanel();
         JLabel lblOrderAmount = new JLabel("Order Amount:");
-        JLabel lblAdditionalSH = new JLabel("Additional S & H:");
+        JLabel lblAdditionalIVA = new JLabel("Additional S & H:");
 
         GridBagLayout gridbag = new GridBagLayout();
         searchUI.setLayout(gridbag);
@@ -26,8 +26,8 @@ public class COBuilder extends UIBuilder {
 
         searchUI.add(lblOrderAmount);
         searchUI.add(txtOrderAmount);
-        searchUI.add(lblAdditionalSH);
-        searchUI.add(txtAdditionalSH);
+        searchUI.add(lblAdditionalIVA);
+        searchUI.add(txtAdditionalIVA);
 
         gbc.anchor = GridBagConstraints.WEST;
 
@@ -41,7 +41,7 @@ public class COBuilder extends UIBuilder {
         gridbag.setConstraints(lblOrderAmount, gbc);
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gridbag.setConstraints(lblAdditionalSH, gbc);
+        gridbag.setConstraints(lblAdditionalIVA, gbc);
 
         gbc.anchor = GridBagConstraints.WEST;
         gbc.gridx = 1;
@@ -49,24 +49,24 @@ public class COBuilder extends UIBuilder {
         gridbag.setConstraints(txtOrderAmount, gbc);
         gbc.gridx = 1;
         gbc.gridy = 1;
-        gridbag.setConstraints(txtAdditionalSH, gbc);
+        gridbag.setConstraints(txtAdditionalIVA, gbc);
 
     }
 
     @Override
     public void initialize() {
         txtOrderAmount.setText("Enter Amount");
-        txtAdditionalSH.setText("Enter Add Tax");
+        txtAdditionalIVA.setText("Enter Add Tax");
     }
 
     @Override
     public Order createOrder() {
         String strOrderAmount = txtOrderAmount.getText();
-        String strSH = txtAdditionalSH.getText();
+        String strIVA = txtAdditionalIVA.getText();
 
         Double dblOrderAmount = new Double(strOrderAmount).doubleValue();
-        Double dblSH = new Double(strSH).doubleValue();
+        Double dblIVA = new Double(strIVA).doubleValue();
 
-        return new ColombianOrder(dblOrderAmount, dblSH);
+        return new ColombianOrder(dblOrderAmount, dblIVA);
     }
 }

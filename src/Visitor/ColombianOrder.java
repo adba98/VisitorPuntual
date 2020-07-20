@@ -9,11 +9,12 @@ import Composite.OrderComponent;
 public class ColombianOrder extends OrderComponent implements Order {
 
     private double orderAmount;
-    private double additionalSH;
+    private double additionalIVA;
+    private String name = "Colombia"; 
 
-    public ColombianOrder(double inp_orderAmount, double inp_additionalSH) {
+    public ColombianOrder(double inp_orderAmount, double inp_additionalIVA) {
         orderAmount = inp_orderAmount;
-        additionalSH = inp_additionalSH;
+        additionalIVA = inp_additionalIVA;
     }
 
     @Override
@@ -26,12 +27,12 @@ public class ColombianOrder extends OrderComponent implements Order {
     }
 
     public double getAdditionalSH() {
-        return additionalSH;
+        return additionalIVA;
 
     }
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "\n "+ name + " Order \n Amount: " + orderAmount + "\n IVA: " +  additionalIVA + "\n Total:"  +  getTotal() ; 
     }
 }

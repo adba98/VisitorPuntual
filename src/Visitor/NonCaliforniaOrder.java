@@ -6,6 +6,7 @@ import Composite.OrderComponent;
 public class NonCaliforniaOrder extends OrderComponent implements Order {
 
     private double orderAmount;
+    private String name = "Non California"; 
 
     public NonCaliforniaOrder() {
     }
@@ -24,6 +25,6 @@ public class NonCaliforniaOrder extends OrderComponent implements Order {
 
     @Override
     public String toString() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    	return "\n "+ name + " Order \n Amount: " + orderAmount + "\n Total:"  +  getTotal() ; 
     }
 }
