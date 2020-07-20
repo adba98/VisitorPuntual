@@ -13,12 +13,12 @@ public abstract class OrderComponent {
     }
 
     public void setTotal(double t) {
-        total = t; 
-    }
-    public double getTotal() {
-        return total; 
+        total = t;
     }
 
+    public double getTotal() {
+        return total;
+    }
 
     public void addComponent(OrderComponent component) throws CompositeException {
         throw new CompositeException("Invalid Operation. Not Supported add component");
@@ -28,8 +28,11 @@ public abstract class OrderComponent {
         throw new CompositeException("Invalid Operation. Not Supported get component");
     }
 
- //   public abstract double getTotal();
+    public void setComponent(int componentNum,OrderComponent component) throws CompositeException {
+        throw new CompositeException("Invalid Operation. Not Supported set component");
+    }
 
+    //   public abstract double getTotal();
     public abstract String toString();
 
 }

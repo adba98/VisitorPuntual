@@ -26,7 +26,7 @@ public class ColombianOrder extends OrderComponent implements Order {
         return orderAmount;
     }
 
-    public double getAdditionalSH() {
+    public double getAdditionalIVA() {
         return additionalIVA;
 
     }

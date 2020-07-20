@@ -23,8 +23,11 @@ public class OrderComposite extends OrderComponent {
     }
 
     public OrderComponent getComponent(int componentNum) throws CompositeException {
-        System.out.println(orderCol);
         return (OrderComponent) orderCol.elementAt(componentNum);
+    }
+
+    public void setComponent(int componentNum, OrderComponent o) throws CompositeException {
+        orderCol.set(componentNum,o);
     }
 
     @Override

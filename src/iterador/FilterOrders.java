@@ -1,12 +1,7 @@
 package iterador;
 
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
-import Composite.OrderComponent;
+import java.util.*;
 import Composite.OrderComposite;
-import Visitor.CaliforniaOrder;
 import Visitor.Order;
 
 public class FilterOrders implements Iterator {
@@ -28,20 +23,19 @@ public class FilterOrders implements Iterator {
     @Override
     public boolean hasNext() {
         boolean matchFound = false;
-        System.out.println("Si esta entrando no sea terco");
         while (ec.hasMoreElements()) {
 
             /**
              *
-             * // FIXME recorro los archivos compuestos y luego los las ordenes?
-             * OrderComponent tempObj = (OrderComponent) ec.nextElement();
+             * // FIXME recorro los archivos compuestos y luego los las
+             * ordenes? OrderComponent tempObj = (OrderComponent)
+             * ec.nextElement();
              *
              * if(tempObj.getClass() == OrderComposite.class) { // vuelvo a
              * iterar el compuesto }else {
              *
              * if (tempObj.getCertificationType().equals(filteredType)) {
-             * matchFound = true; nextCandidate = tempObj; break; }
-			}*
+             * matchFound = true; nextCandidate = tempObj; break; } }*
              */
             Order tempObj = (Order) ec.nextElement();
 

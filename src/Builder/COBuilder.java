@@ -3,6 +3,7 @@ package Builder;
 import Visitor.ColombianOrder;
 import Visitor.Order;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
 
 /**
@@ -18,7 +19,7 @@ public class COBuilder extends UIBuilder {
     public void addUIControls() {
         searchUI = new JPanel();
         JLabel lblOrderAmount = new JLabel("Order Amount:");
-        JLabel lblAdditionalIVA = new JLabel("Additional S & H:");
+        JLabel lblAdditionalIVA = new JLabel("Additional IVA:");
 
         GridBagLayout gridbag = new GridBagLayout();
         searchUI.setLayout(gridbag);
@@ -60,13 +61,14 @@ public class COBuilder extends UIBuilder {
     }
 
     @Override
-    public Order createOrder() {
+    public ArrayList getValues() {
+        ArrayList values = new ArrayList();
         String strOrderAmount = txtOrderAmount.getText();
         String strIVA = txtAdditionalIVA.getText();
 
-        Double dblOrderAmount = new Double(strOrderAmount).doubleValue();
-        Double dblIVA = new Double(strIVA).doubleValue();
+        values.add(strOrderAmount);
+        values.add(strIVA);
 
-        return new ColombianOrder(dblOrderAmount, dblIVA);
+        return values;
     }
 }

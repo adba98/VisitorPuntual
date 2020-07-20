@@ -1,7 +1,6 @@
 package Builder;
 
-
-import Visitor.Order;
+import java.util.ArrayList;
 import javax.swing.*;
 
 public abstract class UIBuilder {
@@ -12,7 +11,7 @@ public abstract class UIBuilder {
 
     public abstract void initialize();
 
-    public abstract Order createOrder();
+    public abstract ArrayList getValues();
 
     public JPanel getSearchUI() {
         return searchUI;

@@ -3,8 +3,8 @@ package Builder;
 import Visitor.CaliforniaOrder;
 import Visitor.Order;
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
-import java.util.*;
 
 /**
  *
@@ -61,18 +61,15 @@ public class CABuilder extends UIBuilder {
     }
 
     @Override
-    public Order createOrder() {
-        
-        // ¿porque combina la vista con la creacion de un objeto del modelo de negocio 
-    
+    public ArrayList getValues() {
+        ArrayList values = new ArrayList();
         String strOrderAmount = txtOrderAmount.getText();
         String strTax = txtAdditionalTax.getText();
 
-        Double dblOrderAmount = new Double(strOrderAmount).doubleValue();
-        Double dblTax = new Double(strTax).doubleValue();
+        values.add(strOrderAmount);
+        values.add(strTax);
 
-        return new CaliforniaOrder(dblOrderAmount,dblTax);
-    
+        return values;
     }
 
 }

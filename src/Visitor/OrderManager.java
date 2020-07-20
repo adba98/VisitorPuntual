@@ -11,6 +11,7 @@ import java.util.Iterator;
 
 import javax.swing.*;
 import com.sun.java.swing.plaf.windows.*;
+import java.util.ArrayList;
 
 /**
  * @author OSCAR
@@ -26,12 +27,14 @@ public class OrderManager extends JFrame {
     public static final String GET_TOTAL = "Get Total";
     public static final String CREATE_ORDER = "Create Order";
     public static final String MODIFY_ORDER = "Modify Order";
+    public static final String SAVE_ORDER = "Save Order";
     public static final String EXIT = "Exit";
 
     private JComboBox cmbOrderType;
     private JPanel pSearchCriteria;
 
-    private JButton getTotalButton, createOrderButton, modOrderButton, exitButton;
+    private JButton getTotalButton, createOrderButton;
+    private JButton modOrderButton, saveOrderButton, exitButton;
 
     private JLabel lblOrderType;
     private JLabel lblParcial, lblParcialValue;
@@ -73,6 +76,9 @@ public class OrderManager extends JFrame {
         modOrderButton = new JButton(OrderManager.MODIFY_ORDER);
         modOrderButton.setEnabled(false);
 
+        saveOrderButton = new JButton(OrderManager.SAVE_ORDER);
+        saveOrderButton.setEnabled(false);
+
         exitButton = new JButton(OrderManager.EXIT);
         exitButton.setMnemonic(KeyEvent.VK_X);
 
@@ -81,6 +87,7 @@ public class OrderManager extends JFrame {
         getTotalButton.addActionListener(objButtonHandler);
         createOrderButton.addActionListener(objButtonHandler);
         modOrderButton.addActionListener(objButtonHandler);
+        saveOrderButton.addActionListener(objButtonHandler);
         cmbOrderType.addActionListener(objButtonHandler);
         exitButton.addActionListener(objButtonHandler);
 
@@ -95,7 +102,9 @@ public class OrderManager extends JFrame {
         panel.add(getTotalButton);
         panel.add(createOrderButton);
         panel.add(modOrderButton);
+        panel.add(saveOrderButton);
         panel.add(exitButton);
+
         gbc2.anchor = GridBagConstraints.CENTER;
         gbc2.gridx = 0;
         gbc2.gridy = 0;
@@ -108,6 +117,9 @@ public class OrderManager extends JFrame {
         gridbag2.setConstraints(getTotalButton, gbc2);
         gbc2.gridx = 1;
         gbc2.gridy = 1;
+        gridbag2.setConstraints(saveOrderButton, gbc2);
+        gbc2.gridx = 0;
+        gbc2.gridy = 2;
         gridbag2.setConstraints(exitButton, gbc2);
 
         //****************************************************
@@ -236,6 +248,10 @@ public class OrderManager extends JFrame {
         return modOrderButton;
     }
 
+    public JButton getSaveOrderButton() {
+        return saveOrderButton;
+    }
+
 }// End of class OrderManager
 
 class ButtonHandler implements ActionListener {
@@ -244,16 +260,16 @@ class ButtonHandler implements ActionListener {
     UIBuilder builder;
     JPanel UIObj;
     OrderComposite objOrderComp = new OrderComposite();
+    int numOrden = 0;
 
     public void actionPerformed(ActionEvent e) {
         String totalParcialResult = null;
 
         if (e.getActionCommand().equals(OrderManager.EXIT)) {
-            System.out.println("EXIT");
             System.exit(1);
         }
+        //****************************************************
         if (e.getSource() == objOrderManager.getOrderTypeCtrl()) {
-            System.out.println("ComboBox");
             String selection = objOrderManager.getOrderType();
             if (selection.equals("") == false) {
                 setPanelTypeOrder(selection);
@@ -262,10 +278,15 @@ class ButtonHandler implements ActionListener {
             objOrderManager.getCreateOrderButton().setEnabled(true);
             objOrderManager.getModOrderButton().setEnabled(true);
         }
-
+        //****************************************************
         if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)) {
+
+            String orderType = objOrderManager.getOrderType();
+
             //get input values
-            Order order = builder.createOrder();
+            ArrayList values = builder.getValues();
+
+            Order order = createOrder(orderType, values);
 
             //Get the Visitor (instantiate)
             OrderVisitor visitor = objOrderManager.getOrderVisitor();
@@ -295,36 +316,96 @@ class ButtonHandler implements ActionListener {
             }*/
         }
 
+        //****************************************************
         if (e.getActionCommand().equals(OrderManager.MODIFY_ORDER)) {
-            int numOrden = Integer.parseInt(JOptionPane.showInputDialog(objOrderManager, "Ingrese el ID de orden"));
+          
+          String  op =                     JOptionPane.showInputDialog(objOrderManager, "Ingrese el ID de orden"); 
+      
+            
+            if(op== null){}else{
+            numOrden = Integer.parseInt(op);
             Order orderToEdit = null;
 
             Iterator iterator = objOrderComp.getFilteredOrders("");
 
             for (int i = 0; i < numOrden; i++) {
                 if (iterator.hasNext()) {
+
                     orderToEdit = (Order) iterator.next();
+                    System.out.println("ORDER TO EDIT ANTES" + orderToEdit);
 
                 } else {
-                    System.out.println("No existe el elemento");
+                    JOptionPane.showMessageDialog(null, "No existe el elemento", "Error", JOptionPane.ERROR_MESSAGE);
                     orderToEdit = null;
-
                 }
             }
+
             if (orderToEdit != null) {
                 if (orderToEdit.getClass().equals(CaliforniaOrder.class)) {
                     setPanelTypeOrder(objOrderManager.CA_ORDER);
-
+                    objOrderManager.getOrderTypeCtrl().setSelectedIndex(1);
+                }
+                if (orderToEdit.getClass().equals(NonCaliforniaOrder.class)) {
+                    objOrderManager.getOrderTypeCtrl().setSelectedIndex(2);
+                    setPanelTypeOrder(objOrderManager.NON_CA_ORDER);
+                }
+                if (orderToEdit.getClass().equals(OverseasOrder.class)) {
+                    objOrderManager.getOrderTypeCtrl().setSelectedIndex(3);
+                    setPanelTypeOrder(objOrderManager.OVERSEAS_ORDER);
+                }
+                if (orderToEdit.getClass().equals(ColombianOrder.class)) {
+                    objOrderManager.getOrderTypeCtrl().setSelectedIndex(4);
+                    setPanelTypeOrder(objOrderManager.CO_ORDER);
                 }
 
+                objOrderManager.getGetTotalButton().setEnabled(false);
+                objOrderManager.getCreateOrderButton().setEnabled(false);
+                objOrderManager.getModOrderButton().setEnabled(false);
+                objOrderManager.getSaveOrderButton().setEnabled(true);
+                objOrderManager.getOrderTypeCtrl().setEnabled(false);
             }
-            System.out.println(orderToEdit);
+        
+            }
+            }
+
+        //****************************************************
+        if (e.getActionCommand().equals(OrderManager.SAVE_ORDER)) {
+
+            String orderType = objOrderManager.getOrderType();
+            ArrayList newValues = builder.getValues();
+            Order order = createOrder(orderType, newValues);
+
+            OrderVisitor visitor = objOrderManager.getOrderVisitor();
+            order.accept(visitor);
+
+            try {
+                objOrderComp.setComponent(numOrden - 1, (OrderComponent) order);
+            } catch (CompositeException ex) {
+                System.out.println("Error");
+            }
+            totalParcialResult = new Double(visitor.getOrderTotal()).toString();
+            objOrderManager.setParcialValue(totalParcialResult);
+            objOrderManager.getGetTotalButton().setEnabled(true);
+            objOrderManager.getCreateOrderButton().setEnabled(true);
+            objOrderManager.getModOrderButton().setEnabled(true);
+            objOrderManager.getSaveOrderButton().setEnabled(false);
+            objOrderManager.getOrderTypeCtrl().setEnabled(true);
         }
 
+        //****************************************************
         if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
             String total = new Double(objOrderComp.getTotal()).toString();
             objOrderManager.setTotalValue(total);
 
+            Iterator certCandidates = objOrderComp.getFilteredOrders("");
+            String selectedCandidates = "------  ORDERS ----------";
+
+            while (certCandidates.hasNext()) {
+                Order c = (Order) certCandidates.next();
+                selectedCandidates = selectedCandidates + "\n" + c.toString();// cahambonada 
+
+            }
+            System.out.println(selectedCandidates);
         }
     }
 
@@ -341,6 +422,29 @@ class ButtonHandler implements ActionListener {
         UIObj = builder.getSearchUI();
         objOrderManager.displayNewUI(UIObj);
 
+    }
+
+    public Order createOrder(String orderType, ArrayList values) {
+        if (orderType.equalsIgnoreCase(OrderManager.CA_ORDER)) {
+            Double orderAmount = Double.parseDouble((String) values.get(0));
+            Double Tax = Double.parseDouble((String) values.get(1));
+            return new CaliforniaOrder(orderAmount, Tax);
+        }
+        if (orderType.equalsIgnoreCase(OrderManager.NON_CA_ORDER)) {
+            Double orderAmount = Double.parseDouble((String) values.get(0));
+            return new NonCaliforniaOrder(orderAmount);
+        }
+        if (orderType.equalsIgnoreCase(OrderManager.OVERSEAS_ORDER)) {
+            Double orderAmount = Double.parseDouble((String) values.get(0));
+            Double SH = Double.parseDouble((String) values.get(1));
+            return new OverseasOrder(orderAmount, SH);
+        }
+        if (orderType.equalsIgnoreCase(OrderManager.CO_ORDER)) {
+            Double orderAmount = Double.parseDouble((String) values.get(0));
+            Double IVA = Double.parseDouble((String) values.get(1));
+            return new ColombianOrder(orderAmount, IVA);
+        }
+        return null;
     }
 
     public ButtonHandler() {

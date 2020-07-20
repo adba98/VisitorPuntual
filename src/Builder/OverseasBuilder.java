@@ -1,6 +1,5 @@
 package Builder;
 
-import Visitor.CaliforniaOrder;
 import Visitor.Order;
 import Visitor.OverseasOrder;
 import java.awt.*;
@@ -62,13 +61,14 @@ public class OverseasBuilder extends UIBuilder {
     }
 
     @Override
-    public Order createOrder() {
+    public ArrayList getValues() {
+        ArrayList values = new ArrayList();
         String strOrderAmount = txtOrderAmount.getText();
         String strSH = txtAdditionalSH.getText();
 
-        Double dblOrderAmount = new Double(strOrderAmount).doubleValue();
-        Double dblSH = new Double(strSH).doubleValue();
+        values.add(strOrderAmount);
+        values.add(strSH);
 
-        return new OverseasOrder(dblOrderAmount,dblSH);
+        return values;
     }
 }

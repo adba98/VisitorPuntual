@@ -10,8 +10,8 @@ import java.util.*;
  *
  * @author OSCAR
  */
-
 public class NONCABuilder extends UIBuilder {
+
     private JTextField txtOrderAmount = new JTextField(10);
 
     @Override
@@ -50,9 +50,12 @@ public class NONCABuilder extends UIBuilder {
     }
 
     @Override
-    public Order createOrder() {
+    public ArrayList getValues() {
+        ArrayList values = new ArrayList();
         String strOrderAmount = txtOrderAmount.getText();
-        Double dblOrderAmount = new Double(strOrderAmount).doubleValue();
-        return new NonCaliforniaOrder(dblOrderAmount);
+
+        values.add(strOrderAmount);
+
+        return values;
     }
 }
