@@ -69,7 +69,7 @@ public class OrderManager extends JFrame {
         createOrderButton = new JButton(OrderManager.CREATE_ORDER);
         createOrderButton.setMnemonic(KeyEvent.VK_C);//getTotal?
         createOrderButton.setEnabled(false);
-        
+
         modOrderButton = new JButton(OrderManager.MODIFY_ORDER);
         modOrderButton.setEnabled(false);
 
@@ -80,6 +80,7 @@ public class OrderManager extends JFrame {
 
         getTotalButton.addActionListener(objButtonHandler);
         createOrderButton.addActionListener(objButtonHandler);
+        modOrderButton.addActionListener(objButtonHandler);
         cmbOrderType.addActionListener(objButtonHandler);
         exitButton.addActionListener(objButtonHandler);
 
@@ -244,8 +245,6 @@ class ButtonHandler implements ActionListener {
     JPanel UIObj;
     OrderComposite objOrderComp = new OrderComposite();
 
-    ;
-
     public void actionPerformed(ActionEvent e) {
         String totalParcialResult = null;
 
@@ -257,7 +256,7 @@ class ButtonHandler implements ActionListener {
             System.out.println("ComboBox");
             String selection = objOrderManager.getOrderType();
             if (selection.equals("") == false) {
-             setPanelTypeOrder(selection); 
+                setPanelTypeOrder(selection);
             }
             objOrderManager.getGetTotalButton().setEnabled(true);
             objOrderManager.getCreateOrderButton().setEnabled(true);
@@ -281,30 +280,45 @@ class ButtonHandler implements ActionListener {
 
             totalParcialResult = new Double(visitor.getOrderTotal()).toString();
             objOrderManager.setParcialValue(totalParcialResult);
-            
-            
+
             // aniada los jlabel para la infromacion de las ordernes 
-            
-            
-            String selection = objOrderManager.getOrderType();
-            
-			
-			
-			
-			Iterator certCandidates = objOrderComp.getFilteredOrders(selection);
-			String selectedCandidates = "------  ORDERS ----------";
+            /* String selection = objOrderManager.getOrderType();
 
-			while (certCandidates.hasNext()) {
-				Order c = (Order) certCandidates.next();
-				selectedCandidates = selectedCandidates + "\n" + c.toString();// cahambonada 
-				
-				System.err.println(selectedCandidates);
-			}
-			
-		
-            
-            
+            Iterator certCandidates = objOrderComp.getFilteredOrders(selection);
+            String selectedCandidates = "------  ORDERS ----------";
 
+            while (certCandidates.hasNext()) {
+                Order c = (Order) certCandidates.next();
+                selectedCandidates = selectedCandidates + "\n" + c.toString();// cahambonada 
+
+                System.err.println(selectedCandidates);
+            }*/
+        }
+
+        if (e.getActionCommand().equals(OrderManager.MODIFY_ORDER)) {
+            int numOrden = Integer.parseInt(JOptionPane.showInputDialog(objOrderManager, "Ingrese el ID de orden"));
+            Order orderToEdit = null;
+
+            Iterator iterator = objOrderComp.getFilteredOrders("");
+
+            for (int i = 0; i < numOrden; i++) {
+                if (iterator.hasNext()) {
+                    orderToEdit = (Order) iterator.next();
+
+                } else {
+                    System.out.println("No existe el elemento");
+                    orderToEdit = null;
+
+                }
+            }
+            if (orderToEdit != null) {
+                if (orderToEdit.getClass().equals(CaliforniaOrder.class)) {
+                    setPanelTypeOrder(objOrderManager.CA_ORDER);
+
+                }
+
+            }
+            System.out.println(orderToEdit);
         }
 
         if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
@@ -326,10 +340,10 @@ class ButtonHandler implements ActionListener {
         //get the final build object
         UIObj = builder.getSearchUI();
         objOrderManager.displayNewUI(UIObj);
-		
-	}
 
-	public ButtonHandler() {
+    }
+
+    public ButtonHandler() {
     }
 
     public ButtonHandler(OrderManager inObjOrderManager) {
