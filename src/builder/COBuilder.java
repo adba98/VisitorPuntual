@@ -1,10 +1,11 @@
-package Builder;
+package builder;
 
-import Visitor.ColombianOrder;
-import Visitor.Order;
 import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
+
+import visitor.ColombianOrder;
+import visitor.Order;
 
 /**
  *

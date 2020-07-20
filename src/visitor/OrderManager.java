@@ -1,9 +1,8 @@
-package Visitor;
+package visitor;
 
-import Builder.*;
-import Composite.CompositeException;
-import Composite.OrderComponent;
-import Composite.OrderComposite;
+import composite.CompositeException;
+import composite.OrderComponent;
+import composite.OrderComposite;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -11,6 +10,9 @@ import java.util.Iterator;
 
 import javax.swing.*;
 import com.sun.java.swing.plaf.windows.*;
+
+import builder.*;
+
 import java.util.ArrayList;
 
 /**

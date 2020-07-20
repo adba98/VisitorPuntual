@@ -1,6 +1,6 @@
-package Visitor;
+package visitor;
 
-import Composite.OrderComponent;
+import composite.OrderComponent;
 
 public class CaliforniaOrder extends OrderComponent implements Order {
 

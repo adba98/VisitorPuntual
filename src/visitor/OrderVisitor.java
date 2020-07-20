@@ -1,4 +1,4 @@
-package Visitor;
+package visitor;
 
 import java.util.*;
 
@@ -12,7 +12,7 @@ class OrderVisitor implements VisitorInterface {
 	}
 
 	public void visit(CaliforniaOrder inp_order) {
-		orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalTax();
+		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() *inp_order.getAdditionalTax());
 		inp_order.setTotal(getOrderTotal());
 	}
 
@@ -23,14 +23,12 @@ class OrderVisitor implements VisitorInterface {
 	}
 
 	public void visit(OverseasOrder inp_order) {
-		orderTotal = inp_order.getOrderAmount() + inp_order.getAdditionalSH();
-		// inp_order.total = getOrderTotal();
+		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() *inp_order.getAdditionalSH());
 		inp_order.setTotal(getOrderTotal());
 	}
 
 	public void visit(ColombianOrder inp_order) {
-		orderTotal = inp_order.getOrderAmount() * inp_order.getAdditionalIVA();
-		// inp_order.total = getOrderTotal();
+		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() * inp_order.getAdditionalIVA());
 		inp_order.setTotal(getOrderTotal());
 	}
 

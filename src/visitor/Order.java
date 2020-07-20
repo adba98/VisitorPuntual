@@ -1,4 +1,4 @@
-package Visitor;
+package visitor;
 
 public interface Order {
 

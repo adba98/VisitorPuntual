@@ -1,8 +1,9 @@
 package iterador;
 
 import java.util.*;
-import Composite.OrderComposite;
-import Visitor.Order;
+
+import composite.OrderComposite;
+import visitor.Order;
 
 public class FilterOrders implements Iterator {
 

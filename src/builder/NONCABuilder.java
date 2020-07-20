@@ -1,9 +1,11 @@
-package Builder;
+package builder;
 
-import Visitor.NonCaliforniaOrder;
-import Visitor.Order;
 import java.awt.*;
 import javax.swing.*;
+
+import visitor.NonCaliforniaOrder;
+import visitor.Order;
+
 import java.util.*;
 
 /**

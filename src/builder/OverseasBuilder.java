@@ -1,9 +1,11 @@
-package Builder;
+package builder;
 
-import Visitor.Order;
-import Visitor.OverseasOrder;
 import java.awt.*;
 import javax.swing.*;
+
+import visitor.Order;
+import visitor.OverseasOrder;
+
 import java.util.*;
 
 /**
