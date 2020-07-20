@@ -40,19 +40,17 @@ public class OrderComposite extends OrderComponent {
 
     @Override
     public String toString() {
-        return "Pedido " + getTotal() ; 
-    }
-    
-    
-    
-    // uso para el patron iterador externo 
-    public Iterator getFilteredOrders(String typeOrder) {
-    	return new FilterOrders(this, typeOrder);
-    
+        return "Pedido " + getTotal();
     }
 
-	public Enumeration getAllOrders() {
-		return orderCol.elements(); 
-	}
+    // uso para el patron iterador externo 
+    public Iterator getFilteredOrders(String typeOrder) {
+        return new FilterOrders(this, typeOrder);
+
+    }
+
+    public Enumeration getAllOrders() {
+        return orderCol.elements();
+    }
 
 }
