@@ -7,6 +7,8 @@ import Composite.OrderComposite;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Iterator;
+
 import javax.swing.*;
 import com.sun.java.swing.plaf.windows.*;
 
@@ -245,7 +247,7 @@ class ButtonHandler implements ActionListener {
     ;
 
     public void actionPerformed(ActionEvent e) {
-        String totalResult = null;
+        String totalParcialResult = null;
 
         if (e.getActionCommand().equals(OrderManager.EXIT)) {
             System.out.println("EXIT");
@@ -255,17 +257,7 @@ class ButtonHandler implements ActionListener {
             System.out.println("ComboBox");
             String selection = objOrderManager.getOrderType();
             if (selection.equals("") == false) {
-                BuilderFactory factory = new BuilderFactory();
-                //create an appropriate builder instance
-                builder = factory.getUIBuilder(selection);
-                //configure the director with the builder
-                UIDirector director = new UIDirector(builder);
-                //director invokes different builder
-                // methods
-                director.build();
-                //get the final build object
-                UIObj = builder.getSearchUI();
-                objOrderManager.displayNewUI(UIObj);
+             setPanelTypeOrder(selection); 
             }
             objOrderManager.getGetTotalButton().setEnabled(true);
             objOrderManager.getCreateOrderButton().setEnabled(true);
@@ -287,8 +279,31 @@ class ButtonHandler implements ActionListener {
                 System.out.println("Error AddComponent" + ex);
             }
 
-            totalResult = new Double(visitor.getOrderTotal()).toString();
-            objOrderManager.setParcialValue(totalResult);
+            totalParcialResult = new Double(visitor.getOrderTotal()).toString();
+            objOrderManager.setParcialValue(totalParcialResult);
+            
+            
+            // aniada los jlabel para la infromacion de las ordernes 
+            
+            
+            String selection = objOrderManager.getOrderType();
+            
+			
+			
+			
+			Iterator certCandidates = objOrderComp.getFilteredOrders(selection);
+			String selectedCandidates = "------  ORDERS ----------";
+
+			while (certCandidates.hasNext()) {
+				Order c = (Order) certCandidates.next();
+				selectedCandidates = selectedCandidates + "\n" + c.toString();// cahambonada 
+				
+				System.err.println(selectedCandidates);
+			}
+			
+		
+            
+            
 
         }
 
@@ -299,7 +314,22 @@ class ButtonHandler implements ActionListener {
         }
     }
 
-    public ButtonHandler() {
+    private void setPanelTypeOrder(String selection) {
+        BuilderFactory factory = new BuilderFactory();
+        //create an appropriate builder instance
+        builder = factory.getUIBuilder(selection);
+        //configure the director with the builder
+        UIDirector director = new UIDirector(builder);
+        //director invokes different builder
+        // methods
+        director.build();
+        //get the final build object
+        UIObj = builder.getSearchUI();
+        objOrderManager.displayNewUI(UIObj);
+		
+	}
+
+	public ButtonHandler() {
     }
 
     public ButtonHandler(OrderManager inObjOrderManager) {
