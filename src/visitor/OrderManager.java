@@ -14,6 +14,7 @@ import com.sun.java.swing.plaf.windows.*;
 import builder.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * @author OSCAR
@@ -272,12 +273,18 @@ class ButtonHandler implements ActionListener {
 		// ****************************************************
 		if (e.getSource() == objOrderManager.getOrderTypeCtrl()) {
 			String selection = objOrderManager.getOrderType();
-			if (selection.equals("") == false) {
+			if (selection.equals(OrderManager.BLANK) == false) {
 				setPanelTypeOrder(selection);
+				objOrderManager.getGetTotalButton().setEnabled(true);
+				objOrderManager.getCreateOrderButton().setEnabled(true);
+				objOrderManager.getModOrderButton().setEnabled(true);
+			}else {
+				objOrderManager.getGetTotalButton().setEnabled(false);
+				objOrderManager.getCreateOrderButton().setEnabled(false);
+				objOrderManager.getModOrderButton().setEnabled(false);
+				objOrderManager.displayNewUI(new JPanel());
 			}
-			objOrderManager.getGetTotalButton().setEnabled(true);
-			objOrderManager.getCreateOrderButton().setEnabled(true);
-			objOrderManager.getModOrderButton().setEnabled(true);
+			
 		}
 		// ****************************************************
 		if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)) {
@@ -285,8 +292,7 @@ class ButtonHandler implements ActionListener {
 			String orderType = objOrderManager.getOrderType();
 
 			// get input values
-			ArrayList values = builder.getValues();
-
+			HashMap<String, String> values = builder.getValues();
 			Order order = createOrder(orderType, values);
 
 			// Get the Visitor (instantiate)
@@ -303,18 +309,6 @@ class ButtonHandler implements ActionListener {
 			totalParcialResult = new Double(visitor.getOrderTotal()).toString();
 			objOrderManager.setParcialValue(totalParcialResult);
 
-			// aniada los jlabel para la infromacion de las ordernes
-			/*
-			 * String selection = objOrderManager.getOrderType();
-			 * 
-			 * Iterator certCandidates = objOrderComp.getFilteredOrders(selection); String
-			 * selectedCandidates = "------  ORDERS ----------";
-			 * 
-			 * while (certCandidates.hasNext()) { Order c = (Order) certCandidates.next();
-			 * selectedCandidates = selectedCandidates + "\n" + c.toString();// cahambonada
-			 * 
-			 * System.err.println(selectedCandidates); }
-			 */
 		}
 
 		// ****************************************************
@@ -337,7 +331,7 @@ class ButtonHandler implements ActionListener {
 
 					} else {
 						JOptionPane.showMessageDialog(null, "No existe el elemento", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane.ERROR_MESSAGE);
 						orderToEdit = null;
 					}
 				}
@@ -345,19 +339,54 @@ class ButtonHandler implements ActionListener {
 				if (orderToEdit != null) {
 					if (orderToEdit.getClass().equals(CaliforniaOrder.class)) {
 						setPanelTypeOrder(objOrderManager.CA_ORDER);
-						objOrderManager.getOrderTypeCtrl().setSelectedIndex(1);
+						objOrderManager.getOrderTypeCtrl().setSelectedItem(objOrderManager.CA_ORDER);
+						
+						
+						CaliforniaOrder o= (CaliforniaOrder) orderToEdit; 
+						HashMap<String , String>  values = new HashMap<>(); 
+						
+						values.put("orderAmount",String.valueOf(o.getOrderAmount()));
+						values.put("additionalTax",String.valueOf(o.getAdditionalTax()));
+						builder.setValues(values);
+						
+						
 					}
 					if (orderToEdit.getClass().equals(NonCaliforniaOrder.class)) {
-						objOrderManager.getOrderTypeCtrl().setSelectedIndex(2);
 						setPanelTypeOrder(objOrderManager.NON_CA_ORDER);
+						objOrderManager.getOrderTypeCtrl().setSelectedItem(objOrderManager.NON_CA_ORDER);
+						
+						NonCaliforniaOrder o= (NonCaliforniaOrder) orderToEdit; 
+						HashMap<String , String>  values = new HashMap<>(); 
+						
+						values.put("orderAmount",String.valueOf(o.getOrderAmount()));
+						builder.setValues(values);
+						
+						
 					}
 					if (orderToEdit.getClass().equals(OverseasOrder.class)) {
-						objOrderManager.getOrderTypeCtrl().setSelectedIndex(3);
+						objOrderManager.getOrderTypeCtrl().setSelectedItem(objOrderManager.OVERSEAS_ORDER);
 						setPanelTypeOrder(objOrderManager.OVERSEAS_ORDER);
+						
+						OverseasOrder o= (OverseasOrder) orderToEdit; 
+						HashMap<String , String>  values = new HashMap<>(); 
+						
+						values.put("orderAmount",String.valueOf(o.getOrderAmount()));
+						values.put("additionalSH",String.valueOf(o.getAdditionalSH()));
+						
+						builder.setValues(values);
+						
 					}
 					if (orderToEdit.getClass().equals(ColombianOrder.class)) {
-						objOrderManager.getOrderTypeCtrl().setSelectedIndex(4);
+						objOrderManager.getOrderTypeCtrl().setSelectedItem(objOrderManager.CO_ORDER);
 						setPanelTypeOrder(objOrderManager.CO_ORDER);
+						
+						ColombianOrder o= (ColombianOrder) orderToEdit; 
+						HashMap<String , String>  values = new HashMap<>(); 
+						
+						values.put("orderAmount",String.valueOf(o.getOrderAmount()));
+						values.put("additionalIVA",String.valueOf(o.getAdditionalIVA()));
+						
+						builder.setValues(values);
 					}
 
 					objOrderManager.getGetTotalButton().setEnabled(false);
@@ -374,7 +403,7 @@ class ButtonHandler implements ActionListener {
 		if (e.getActionCommand().equals(OrderManager.SAVE_ORDER)) {
 
 			String orderType = objOrderManager.getOrderType();
-			ArrayList newValues = builder.getValues();
+			HashMap<String, String> newValues = builder.getValues();
 			Order order = createOrder(orderType, newValues);
 
 			OrderVisitor visitor = objOrderManager.getOrderVisitor();
@@ -399,13 +428,12 @@ class ButtonHandler implements ActionListener {
 			String total = new Double(objOrderComp.getTotal()).toString();
 			objOrderManager.setTotalValue(total);
 
-			Iterator certCandidates = objOrderComp.getFilteredOrders("");
+			Iterator filteredCandidates = objOrderComp.getFilteredOrders("");
 			String selectedCandidates = "------  ORDERS ----------";
 
-			while (certCandidates.hasNext()) {
-				Order c = (Order) certCandidates.next();
-				selectedCandidates = selectedCandidates + "\n" + c.toString();// cahambonada
-
+			while (filteredCandidates.hasNext()) {
+				Order c = (Order) filteredCandidates.next();
+				selectedCandidates = selectedCandidates + "\n" + c.toString();
 			}
 			System.out.println(selectedCandidates);
 		}
@@ -426,24 +454,24 @@ class ButtonHandler implements ActionListener {
 
 	}
 
-	public Order createOrder(String orderType, ArrayList values) {
+	public Order createOrder(String orderType, HashMap<String, String> values) {
 		if (orderType.equalsIgnoreCase(OrderManager.CA_ORDER)) {
-			Double orderAmount = Double.parseDouble((String) values.get(0));
-			Double Tax = Double.parseDouble((String) values.get(1));
+			Double orderAmount = Double.parseDouble(values.get("orderAmount"));
+			Double Tax = Double.parseDouble(values.get("additionalTax"));
 			return new CaliforniaOrder(orderAmount, Tax);
 		}
 		if (orderType.equalsIgnoreCase(OrderManager.NON_CA_ORDER)) {
-			Double orderAmount = Double.parseDouble((String) values.get(0));
+			Double orderAmount = Double.parseDouble(values.get("orderAmount"));
 			return new NonCaliforniaOrder(orderAmount);
 		}
 		if (orderType.equalsIgnoreCase(OrderManager.OVERSEAS_ORDER)) {
-			Double orderAmount = Double.parseDouble((String) values.get(0));
-			Double SH = Double.parseDouble((String) values.get(1));
+			Double orderAmount = Double.parseDouble(values.get("orderAmount"));
+			Double SH = Double.parseDouble((String) values.get("additionalSH"));
 			return new OverseasOrder(orderAmount, SH);
 		}
 		if (orderType.equalsIgnoreCase(OrderManager.CO_ORDER)) {
-			Double orderAmount = Double.parseDouble((String) values.get(0));
-			Double IVA = Double.parseDouble((String) values.get(1));
+			Double orderAmount = Double.parseDouble((String) values.get("orderAmount"));
+			Double IVA = Double.parseDouble((String) values.get("additionalIVA"));
 			return new ColombianOrder(orderAmount, IVA);
 		}
 		return null;
@@ -471,6 +499,5 @@ class BuilderFactory {
 			builder = new COBuilder();
 		}
 		return builder;
-
 	}
 }

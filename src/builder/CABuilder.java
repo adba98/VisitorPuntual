@@ -2,6 +2,8 @@ package builder;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.*;
 
 import visitor.CaliforniaOrder;
@@ -62,15 +64,22 @@ public class CABuilder extends UIBuilder {
 	}
 
 	@Override
-	public ArrayList getValues() {
-		ArrayList values = new ArrayList();
+	public HashMap<String, String> getValues() {
+		HashMap<String, String> values = new HashMap<String, String>();
 		String strOrderAmount = txtOrderAmount.getText();
 		String strTax = txtAdditionalTax.getText();
 
-		values.add(strOrderAmount);
-		values.add(strTax);
+		values.put("orderAmount",strOrderAmount);
+		values.put("additionalTax",strTax);
 
 		return values;
+	}
+
+
+	@Override
+	public void setValues(HashMap<String, String> values) {
+		txtOrderAmount.setText( values.get("orderAmount"));
+		txtAdditionalTax.setText( values.get("additionalTax"));
 	}
 
 }

@@ -52,12 +52,19 @@ public class NONCABuilder extends UIBuilder {
 	}
 
 	@Override
-	public ArrayList getValues() {
-		ArrayList values = new ArrayList();
+	public HashMap<String, String> getValues() {
+		HashMap<String, String> values = new HashMap<String, String>();
 		String strOrderAmount = txtOrderAmount.getText();
-
-		values.add(strOrderAmount);
+		values.put("orderAmount",strOrderAmount);
 
 		return values;
+	}
+
+
+
+	@Override
+	public void setValues(HashMap<String, String> values) {
+		txtOrderAmount.setText(values.get("orderAmount"));		
+		
 	}
 }

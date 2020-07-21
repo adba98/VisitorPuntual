@@ -2,6 +2,8 @@ package builder;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.*;
 
 import visitor.ColombianOrder;
@@ -62,14 +64,20 @@ public class COBuilder extends UIBuilder {
 	}
 
 	@Override
-	public ArrayList getValues() {
-		ArrayList values = new ArrayList();
+	public HashMap<String, String> getValues() {
+		HashMap<String, String> values = new HashMap<String, String>();
 		String strOrderAmount = txtOrderAmount.getText();
 		String strIVA = txtAdditionalIVA.getText();
 
-		values.add(strOrderAmount);
-		values.add(strIVA);
+		values.put("orderAmount",strOrderAmount);
+		values.put("additionalIVA",strIVA);
 
 		return values;
+	}
+
+	@Override
+	public void setValues(HashMap<String, String> values) {
+		txtOrderAmount.setText(values.get("orderAmount"));
+txtAdditionalIVA.setText((String) values.get("additionalIVA"));		
 	}
 }

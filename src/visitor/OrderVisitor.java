@@ -12,7 +12,7 @@ class OrderVisitor implements VisitorInterface {
 	}
 
 	public void visit(CaliforniaOrder inp_order) {
-		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() *inp_order.getAdditionalTax());
+		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() *inp_order.getAdditionalTax() /100);
 		inp_order.setTotal(getOrderTotal());
 	}
 
@@ -23,12 +23,12 @@ class OrderVisitor implements VisitorInterface {
 	}
 
 	public void visit(OverseasOrder inp_order) {
-		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() *inp_order.getAdditionalSH());
+		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() *inp_order.getAdditionalSH()/100);
 		inp_order.setTotal(getOrderTotal());
 	}
 
 	public void visit(ColombianOrder inp_order) {
-		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() * inp_order.getAdditionalIVA());
+		orderTotal = inp_order.getOrderAmount() + (inp_order.getOrderAmount() * inp_order.getAdditionalIVA()/100);
 		inp_order.setTotal(getOrderTotal());
 	}
 
