@@ -2,5 +2,5 @@ package visitor;
 
 public interface Order {
 
-	public void accept(OrderVisitor v);
+    public void accept(OrderVisitor v);
 }

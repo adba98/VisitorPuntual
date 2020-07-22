@@ -2,15 +2,15 @@ package builder;
 
 public class UIDirector {
 
-	private UIBuilder builder;
+    private UIBuilder builder;
 
-	public UIDirector(UIBuilder bldr) {
-		builder = bldr;
-	}
+    public UIDirector(UIBuilder bldr) {
+        builder = bldr;
+    }
 
-	public void build() {
-		builder.addUIControls();
-		builder.initialize();
-	}
+    public void build() {
+        builder.addUIControls();
+        builder.initialize();
+    }
 
 }

@@ -7,17 +7,17 @@ import javax.swing.*;
 
 public abstract class UIBuilder {
 
-	protected JPanel searchUI;
+    protected JPanel searchUI;
 
-	public abstract void addUIControls();
+    public abstract void addUIControls();
 
-	public abstract void initialize();
+    public abstract void initialize();
 
-	public abstract HashMap<String, String > getValues();
-	
-	public abstract void setValues(HashMap<String, String > values);
+    public abstract HashMap<String, String> getValues();
 
-	public JPanel getSearchUI() {
-		return searchUI;
-	}
+    public abstract void setValues(HashMap<String, String> values);
+
+    public JPanel getSearchUI() {
+        return searchUI;
+    }
 }
