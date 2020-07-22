@@ -275,13 +275,12 @@ class ButtonHandler implements ActionListener {
 			String selection = objOrderManager.getOrderType();
 			if (selection.equals(OrderManager.BLANK) == false) {
 				setPanelTypeOrder(selection);
-				objOrderManager.getGetTotalButton().setEnabled(true);
-				objOrderManager.getCreateOrderButton().setEnabled(true);
-				objOrderManager.getModOrderButton().setEnabled(true);
+				setVisibleButtons(true); 
 			}else {
-				objOrderManager.getGetTotalButton().setEnabled(false);
-				objOrderManager.getCreateOrderButton().setEnabled(false);
-				objOrderManager.getModOrderButton().setEnabled(false);
+				
+				
+				setVisibleButtons(false); 
+				
 				objOrderManager.displayNewUI(new JPanel());
 			}
 			
@@ -389,9 +388,8 @@ class ButtonHandler implements ActionListener {
 						builder.setValues(values);
 					}
 
-					objOrderManager.getGetTotalButton().setEnabled(false);
-					objOrderManager.getCreateOrderButton().setEnabled(false);
-					objOrderManager.getModOrderButton().setEnabled(false);
+					setVisibleButtons(false);
+					
 					objOrderManager.getSaveOrderButton().setEnabled(true);
 					objOrderManager.getOrderTypeCtrl().setEnabled(false);
 				}
@@ -416,9 +414,9 @@ class ButtonHandler implements ActionListener {
 			}
 			totalParcialResult = new Double(visitor.getOrderTotal()).toString();
 			objOrderManager.setParcialValue(totalParcialResult);
-			objOrderManager.getGetTotalButton().setEnabled(true);
-			objOrderManager.getCreateOrderButton().setEnabled(true);
-			objOrderManager.getModOrderButton().setEnabled(true);
+			
+			setVisibleButtons(true);
+			
 			objOrderManager.getSaveOrderButton().setEnabled(false);
 			objOrderManager.getOrderTypeCtrl().setEnabled(true);
 		}
@@ -437,6 +435,13 @@ class ButtonHandler implements ActionListener {
 			}
 			System.out.println(selectedCandidates);
 		}
+	}
+
+	private void setVisibleButtons(boolean f) {
+		objOrderManager.getGetTotalButton().setEnabled(f);
+		objOrderManager.getCreateOrderButton().setEnabled(f);
+		objOrderManager.getModOrderButton().setEnabled(f);
+		
 	}
 
 	private void setPanelTypeOrder(String selection) {
