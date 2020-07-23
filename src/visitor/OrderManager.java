@@ -326,7 +326,7 @@ class ButtonHandler implements ActionListener {
                     if (iterator.hasNext()) {
 
                         orderToEdit = (Order) iterator.next();
-                        System.out.println("ORDER TO EDIT ANTES" + orderToEdit);
+                    //    System.out.println("ORDER TO EDIT ANTES" + orderToEdit);
 
                     } else {
                         JOptionPane.showMessageDialog(null, "No existe el elemento", "Error",
