@@ -26,22 +26,13 @@ public class FilterOrders implements Iterator {
         boolean matchFound = false;
         while (ec.hasMoreElements()) {
 
-            /**
-             *
-             * // FIXME recorro los archivos compuestos y luego los las
-             * ordenes? OrderComponent tempObj = (OrderComponent)
-             * ec.nextElement();
-             *
-             * if(tempObj.getClass() == OrderComposite.class) { // vuelvo a
-             * iterar el compuesto }else {
-             *
-             * if (tempObj.getCertificationType().equals(filteredType)) {
-             * matchFound = true; nextCandidate = tempObj; break; } }*
-             */
-            Order tempObj = (Order) ec.nextElement();
+          
+           // Order tempObj = (Order) ec.nextElement();
 
             matchFound = true;
-            nextOrder = tempObj;
+            //nextOrder = tempObj;
+           nextOrder = (Order) ec.nextElement();
+            
             break;
         }
         if (matchFound == true) {
