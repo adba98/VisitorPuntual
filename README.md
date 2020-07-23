@@ -1,8 +1,8 @@
 # VisitorPuntual
 Implementación del patrón Visitor junto con Builder, Composite y Iterator
 
- - Diego Alejandro Hernandez
- - Oscar Adrián Bautista 
+ - Diego Alejandro Hernandez 20141020271
+ - Oscar Adrián Bautista     20142020213
  
 Universidad Distrital Francisco José de Caldas
  
