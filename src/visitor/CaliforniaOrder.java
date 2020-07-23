@@ -8,9 +8,6 @@ public class CaliforniaOrder extends OrderComponent implements Order {
     private double additionalTax;
     private String name = "California";
 
-    public CaliforniaOrder() {
-    }
-
     public CaliforniaOrder(double inp_orderAmount, double inp_additionalTax) {
         orderAmount = inp_orderAmount;
         additionalTax = inp_additionalTax;
