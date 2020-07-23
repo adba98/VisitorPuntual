@@ -305,7 +305,7 @@ class ButtonHandler implements ActionListener {
                 System.out.println("Error AddComponent" + ex);
             }
 
-            totalParcialResult = new Double(visitor.getOrderTotal()).toString();
+            totalParcialResult = String.valueOf(visitor.getOrderTotal());
             objOrderManager.setParcialValue(totalParcialResult);
 
         }
@@ -399,7 +399,7 @@ class ButtonHandler implements ActionListener {
         if (e.getActionCommand().equals(OrderManager.SAVE_ORDER)) {
 
             String orderType = objOrderManager.getOrderType();
-            HashMap<String, String> newValues = builder.getValues();
+            HashMap newValues = builder.getValues();
             Order order = createOrder(orderType, newValues);
 
             OrderVisitor visitor = objOrderManager.getOrderVisitor();
@@ -410,7 +410,9 @@ class ButtonHandler implements ActionListener {
             } catch (CompositeException ex) {
                 System.out.println("Error");
             }
-            totalParcialResult = new Double(visitor.getOrderTotal()).toString();
+
+            totalParcialResult = String.valueOf(visitor.getOrderTotal());
+
             objOrderManager.setParcialValue(totalParcialResult);
             objOrderManager.getGetTotalButton().setEnabled(true);
             objOrderManager.getCreateOrderButton().setEnabled(true);
