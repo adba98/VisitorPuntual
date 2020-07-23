@@ -8,9 +8,6 @@ public class OverseasOrder extends OrderComponent implements Order {
     private double additionalSH;
     private String name = "Overseas";
 
-    public OverseasOrder() {
-    }
-
     public OverseasOrder(double inp_orderAmount, double inp_additionalSH) {
         orderAmount = inp_orderAmount;
         additionalSH = inp_additionalSH;

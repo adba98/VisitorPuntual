@@ -7,9 +7,6 @@ public class NonCaliforniaOrder extends OrderComponent implements Order {
     private double orderAmount;
     private String name = "Non California";
 
-    public NonCaliforniaOrder() {
-    }
-
     public NonCaliforniaOrder(double inp_orderAmount) {
         orderAmount = inp_orderAmount;
     }

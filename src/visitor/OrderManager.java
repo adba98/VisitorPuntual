@@ -462,12 +462,12 @@ class ButtonHandler implements ActionListener {
         }
         if (orderType.equalsIgnoreCase(OrderManager.OVERSEAS_ORDER)) {
             Double orderAmount = Double.parseDouble(values.get("orderAmount"));
-            Double SH = Double.parseDouble((String) values.get("additionalSH"));
+            Double SH = Double.parseDouble(values.get("additionalSH"));
             return new OverseasOrder(orderAmount, SH);
         }
         if (orderType.equalsIgnoreCase(OrderManager.CO_ORDER)) {
-            Double orderAmount = Double.parseDouble((String) values.get("orderAmount"));
-            Double IVA = Double.parseDouble((String) values.get("additionalIVA"));
+            Double orderAmount = Double.parseDouble(values.get("orderAmount"));
+            Double IVA = Double.parseDouble(values.get("additionalIVA"));
             return new ColombianOrder(orderAmount, IVA);
         }
         return null;
